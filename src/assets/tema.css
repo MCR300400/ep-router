@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Design System: ep-router (Tema Scuro Esclusivo)
+   Allineato agli standard di ep-portfolio, ep-board ed ep-algorithms.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* Superfici e Sfondi Grafite Caldo */
+  --bg-primario: #121316;
+  --bg-superficie: #191a20;
+  --bg-superficie-elevata: #22242c;
+  --bg-superficie-hover: #292b35;
+  --header-bg: rgba(18, 19, 22, 0.88);
+
+  /* Tipografia */
+  --testo-primario: #f4f4f5;
+  --testo-secondario: #a1a1aa;
+  --testo-terziario: #71717a;
+  --testo-invertito: #121316;
+
+  /* Linee e Bordi strutturali */
+  --bordo-sottile: rgba(255, 255, 255, 0.08);
+  --bordo-medio: rgba(255, 255, 255, 0.14);
+  --bordo-forte: rgba(255, 255, 255, 0.22);
+
+  /* Accento Arancione Caldo & Energico */
+  --accento: #f97316;
+  --accento-hover: #fb923c;
+  --accento-attivo: #ea580c;
+  --accento-sfondo: rgba(249, 115, 22, 0.12);
+  --accento-sfondo-hover: rgba(249, 115, 22, 0.18);
+  --accento-bordo: rgba(249, 115, 22, 0.32);
+  --accento-testo: #fdba74;
+  --accento-contrasto: #ffffff;
+
+  /* Tonalità Funzionali Networking */
+  --verde-http: #10b981;
+  --verde-sfondo: rgba(16, 185, 129, 0.12);
+  --verde-bordo: rgba(16, 185, 129, 0.35);
+
+  --viola-sql: #a855f7;
+  --viola-sfondo: rgba(168, 85, 247, 0.12);
+  --viola-bordo: rgba(168, 85, 247, 0.35);
+
+  --ambra-media: #f59e0b;
+  --ambra-sfondo: rgba(245, 158, 11, 0.12);
+  --ambra-bordo: rgba(245, 158, 11, 0.35);
+
+  --rosso-ddos: #ef4444;
+  --rosso-sfondo: rgba(239, 68, 68, 0.15);
+  --rosso-bordo: rgba(239, 68, 68, 0.4);
+
+  --ciano-cache: #06b6d4;
+  --ciano-sfondo: rgba(6, 182, 212, 0.12);
+  --ciano-bordo: rgba(6, 182, 212, 0.35);
+
+  --blu-waf: #3b82f6;
+  --blu-sfondo: rgba(59, 130, 246, 0.12);
+  --blu-bordo: rgba(59, 130, 246, 0.35);
+
+  /* Ombre */
+  --ombra-scheda: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  --ombra-scheda-hover: 0 12px 30px -4px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(249, 115, 22, 0.3);
+  --glow-arancione: 0 0 20px rgba(249, 115, 22, 0.35);
+  --glow-ciano: 0 0 20px rgba(6, 182, 212, 0.35);
+  --glow-rosso: 0 0 20px rgba(239, 68, 68, 0.45);
+
+  /* Font */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-primario);
+  color: var(--testo-primario);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Scrollbar personalizzata dark */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primario);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bordo-medio);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accento);
+}
+
+/* Pulsanti base */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Badges e tag */
+.badge-tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
