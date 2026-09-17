@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { useLingua } from '../composables/useLingua'
 
 const props = defineProps({
   level: { type: Object, required: true },
@@ -8,24 +9,26 @@ const props = defineProps({
 
 const emit = defineEmits(['replay', 'open-levels'])
 
+const { t } = useLingua()
+
 const failureReason = computed(() => {
   if (props.stats.ddosHits > 0) {
-    return 'Attacco DDoS non mitigato: pacchetti maligni hanno saturato i server centrali!'
+    return t('gameover.ddosRagione')
   }
   if (props.stats.droppedPackets > 3) {
-    return 'Buffer Overflow: i pacchetti si sono accumulati nelle code dei nodi senza via d\'uscita!'
+    return t('gameover.bufferRagione')
   }
-  return 'L\'uptime SLA è sceso al di sotto della soglia minima richiesta.'
+  return t('gameover.defaultRagione')
 })
 
 const hint = computed(() => {
   if (props.level.id === 2) {
-    return '💡 Consiglio: Connetti l\'Edge Cache ai PoP di ingresso per soddisfare il traffico HTTP prima che raggiunga l\'Origin!'
+    return t('gameover.hintLvl2')
   }
   if (props.level.id === 3 || props.level.id === 5) {
-    return '💡 Consiglio: Instrada i pacchetti rossi SYN Flood verso il Cloudflare WAF per neutralizzarli!'
+    return t('gameover.hintLvl3')
   }
-  return '💡 Consiglio: Connetti rotte multiple e rimuovi i cavi obsoleti con ✕ per ottimizzare i percorsi.'
+  return t('gameover.hintDefault')
 })
 </script>
 
@@ -34,21 +37,21 @@ const hint = computed(() => {
     <div class="modal-card game-over">
       <div class="testata-fallimento">
         <div class="icona-allarme">⚠️</div>
-        <h2 class="titolo-fallimento">SLA Breached!</h2>
-        <p class="sottotitolo-fallimento">La rete è collassata per congestione o attacco.</p>
+        <h2 class="titolo-fallimento">{{ t('gameover.titolo') }}</h2>
+        <p class="sottotitolo-fallimento">{{ t('gameover.sottotitolo') }}</p>
       </div>
 
       <div class="scatola-diagnostica">
         <div class="diagnostica-riga">
-          <span class="label">SLA Finale:</span>
+          <span class="label">{{ t('gameover.slaFinale') }}</span>
           <span class="valore font-mono rosso">{{ stats.sla }}%</span>
         </div>
         <div class="diagnostica-riga">
-          <span class="label">Pacchetti Persi / Timeout:</span>
+          <span class="label">{{ t('gameover.pacchettiPersi') }}</span>
           <span class="valore font-mono">{{ stats.droppedPackets }}</span>
         </div>
         <div v-if="stats.ddosHits > 0" class="diagnostica-riga">
-          <span class="label">Impatto DDoS Server:</span>
+          <span class="label">{{ t('gameover.impattoDdos') }}</span>
           <span class="valore font-mono rosso">{{ stats.ddosHits }}</span>
         </div>
         <div class="diagnostica-messaggio">
@@ -62,7 +65,7 @@ const hint = computed(() => {
 
       <div class="azioni-modal">
         <button type="button" class="btn-secondario" @click="emit('open-levels')">
-          <span>Tutti i Livelli</span>
+          <span>{{ t('complete.livelli') }}</span>
         </button>
 
         <button type="button" class="btn-primario" @click="emit('replay')">
@@ -70,7 +73,7 @@ const hint = computed(() => {
             <polyline points="1 4 1 10 7 10"></polyline>
             <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
           </svg>
-          <span>Riprova Livello</span>
+          <span>{{ t('gameover.riprova') }}</span>
         </button>
       </div>
     </div>

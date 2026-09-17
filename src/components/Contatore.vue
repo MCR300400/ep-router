@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useLingua } from '../composables/useLingua'
+
+const { t, lingua } = useLingua()
 
 const API = import.meta.env.VITE_API_URL
 const unici = ref(null)
@@ -29,9 +32,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="unici !== null" class="badge-contatore" title="Visitatori unici totali tracciati nel rispetto della privacy">
+  <div v-if="unici !== null" class="badge-contatore" :title="t('contatore.tooltip')">
     <span class="pulsante-dot"></span>
-    <span class="testo">{{ unici.toLocaleString('it-IT') }} {{ unici === 1 ? 'visitatore unico' : 'visitatori unici' }}</span>
+    <span class="testo">{{ unici.toLocaleString(lingua === 'en' ? 'en-US' : 'it-IT') }} {{ unici === 1 ? t('contatore.singolare') : t('contatore.plurale') }}</span>
   </div>
 </template>
 

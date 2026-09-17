@@ -1,5 +1,9 @@
 <script setup>
+import { useLingua } from '../composables/useLingua'
+
 defineEmits(['close'])
+
+const { t, isItalian } = useLingua()
 </script>
 
 <template>
@@ -9,8 +13,8 @@ defineEmits(['close'])
         <div class="brand-guida">
           <span class="icona-lampo">⚡</span>
           <div>
-            <h2 class="titolo-modal">Manuale di Rete — ep-router</h2>
-            <p class="sottotitolo-modal">Come gestire l'Edge di Cloudflare a 60 FPS</p>
+            <h2 class="titolo-modal">{{ t('tut.titolo') }}</h2>
+            <p class="sottotitolo-modal">{{ t('tut.sottotitolo') }}</p>
           </div>
         </div>
         <button type="button" class="btn-chiudi" @click="$emit('close')">✕</button>
@@ -19,47 +23,47 @@ defineEmits(['close'])
       <div class="corpo-guida">
         <!-- Sezione Controlli -->
         <section class="sezione-guida">
-          <h3 class="titolo-sezione">🕹️ Controlli & Interazione</h3>
+          <h3 class="titolo-sezione">{{ t('tut.sezControlli') }}</h3>
           <ul class="lista-punti">
-            <li><strong>Collega fibra ottica:</strong> Trascina con il mouse o tocca due nodi in sequenza (touchscreen friendly).</li>
-            <li><strong>Rimuovi collegamento:</strong> Clicca o tocca il badge <strong>✕</strong> al centro di qualsiasi cavo.</li>
-            <li><strong>Pausa & Velocità:</strong> Premi <kbd>Spazio</kbd> o usa la barra comandi in basso per attivare la pausa o la velocità <strong>2x</strong>.</li>
+            <li>{{ t('tut.c1') }}</li>
+            <li>{{ t('tut.c2') }}</li>
+            <li>{{ t('tut.c3') }}</li>
           </ul>
         </section>
 
         <!-- Sezione Pacchetti -->
         <section class="sezione-guida">
-          <h3 class="titolo-sezione">📦 Protocolli & Tipi di Pacchetti</h3>
+          <h3 class="titolo-sezione">{{ t('tut.sezProtocolli') }}</h3>
           <div class="griglia-tipi">
             <div class="scheda-tipo http">
               <span class="dot-tipo"></span>
               <div>
-                <strong>HTTP GET (Verde)</strong>
-                <p>Traffico web standard. Soddisfatto da Web Origin oppure assorbito istantaneamente dall'Edge Cache.</p>
+                <strong>HTTP GET ({{ isItalian ? 'Verde' : 'Green' }})</strong>
+                <p>{{ t('tut.pHttp') }}</p>
               </div>
             </div>
 
             <div class="scheda-tipo sql">
               <span class="dot-tipo"></span>
               <div>
-                <strong>SQL Query (Viola)</strong>
-                <p>Query al database. Devono raggiungere il cluster D1 per non causare Protocol Mismatch.</p>
+                <strong>SQL Query ({{ isItalian ? 'Viola' : 'Purple' }})</strong>
+                <p>{{ t('tut.pSql') }}</p>
               </div>
             </div>
 
             <div class="scheda-tipo media">
               <span class="dot-tipo"></span>
               <div>
-                <strong>Media Asset (Ambra)</strong>
-                <p>File pesanti e streaming. Instradali direttamente su R2 Object Storage.</p>
+                <strong>Media Asset ({{ isItalian ? 'Ambra' : 'Amber' }})</strong>
+                <p>{{ t('tut.pMedia') }}</p>
               </div>
             </div>
 
             <div class="scheda-tipo ddos">
               <span class="dot-tipo"></span>
               <div>
-                <strong>SYN Flood DDoS (Rosso)</strong>
-                <p>Attacco malevolo! Se colpisce un server centrale toglie il 15% di SLA. Instradalo verso il Cloudflare WAF per neutralizzarlo.</p>
+                <strong>SYN Flood DDoS ({{ isItalian ? 'Rosso' : 'Red' }})</strong>
+                <p>{{ t('tut.pDdos') }}</p>
               </div>
             </div>
           </div>
@@ -67,13 +71,13 @@ defineEmits(['close'])
 
         <!-- Sezione Nodi Speciali -->
         <section class="sezione-guida">
-          <h3 class="titolo-sezione">⚡ Nodi Speciali Cloudflare</h3>
+          <h3 class="titolo-sezione">{{ t('tut.sezNodi') }}</h3>
           <div class="griglia-nodi">
             <div class="nodo-info">
               <span class="icona-nodo ciano">⚡</span>
               <div>
                 <strong>Edge Cache (KV)</strong>
-                <p>Risponde a 0ms alle richieste HTTP, concedendo bonus punti ed evitando buffer overflow sull'Origin.</p>
+                <p>{{ t('tut.nCache') }}</p>
               </div>
             </div>
 
@@ -81,7 +85,7 @@ defineEmits(['close'])
               <span class="icona-nodo blu">🛡️</span>
               <div>
                 <strong>Cloudflare WAF</strong>
-                <p>Filtra e distrugge i pacchetti DDoS rossi, recuperando SLA per la rete.</p>
+                <p>{{ t('tut.nWaf') }}</p>
               </div>
             </div>
 
@@ -89,7 +93,7 @@ defineEmits(['close'])
               <span class="icona-nodo rosa">⚖️</span>
               <div>
                 <strong>Load Balancer</strong>
-                <p>Alterna i pacchetti su cavi d'uscita multipli per evitare congestioni di coda.</p>
+                <p>{{ isItalian ? 'Alterna i pacchetti su cavi d\'uscita multipli per evitare congestioni di coda.' : 'Alternates packets across multiple egress links to balance load and prevent congestion.' }}</p>
               </div>
             </div>
           </div>
@@ -98,7 +102,7 @@ defineEmits(['close'])
 
       <div class="footer-guida">
         <button type="button" class="btn-primario" @click="$emit('close')">
-          Ricevuto, torna alla simulazione!
+          {{ t('tut.chiudiBtn') }}
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import Contatore from './Contatore.vue'
+import { useLingua } from '../composables/useLingua'
 
 const props = defineProps({
   level: { type: Object, required: true },
@@ -9,6 +10,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['toggle-sound', 'open-levels', 'open-tutorial'])
+
+const { t, lingua, isItalian, isEnglish, setLingua } = useLingua()
 
 const slaColor = computed(() => {
   if (props.stats.sla >= 90) return 'var(--verde-http)'
@@ -34,7 +37,7 @@ const progressPercent = computed(() => {
       <button
         type="button"
         class="badge-livello"
-        title="Clicca per selezionare un livello"
+        :title="t('hud.selezionaLivello')"
         @click="emit('open-levels')"
       >
         <span class="dot-livello"></span>
@@ -57,7 +60,7 @@ const progressPercent = computed(() => {
           <span class="sla-indicatore"></span>
           {{ stats.sla }}%
         </div>
-        <div class="metrica-label">SLA Uptime</div>
+        <div class="metrica-label">{{ t('hud.sla') }}</div>
       </div>
 
       <!-- Richieste Consegnate -->
@@ -66,7 +69,7 @@ const progressPercent = computed(() => {
           {{ stats.deliveredCount }}
           <span v-if="!level.isEndless" class="target-sub">/ {{ level.targetDeliveries }}</span>
         </div>
-        <div class="metrica-label">Pacchetti</div>
+        <div class="metrica-label">{{ t('hud.pacchetti') }}</div>
       </div>
 
       <!-- Latenza Media Edge -->
@@ -74,25 +77,47 @@ const progressPercent = computed(() => {
         <div class="metrica-valore font-mono">
           {{ stats.averageLatency }}<span class="unit">ms</span>
         </div>
-        <div class="metrica-label">Latenza Media</div>
+        <div class="metrica-label">{{ t('hud.latenzaMedia') }}</div>
       </div>
 
       <!-- Punteggio Network -->
       <div class="scheda-metrica">
         <div class="metrica-valore font-mono accento">
-          {{ stats.score.toLocaleString('it-IT') }}
+          {{ stats.score.toLocaleString(lingua === 'en' ? 'en-US' : 'it-IT') }}
         </div>
-        <div class="metrica-label">Score</div>
+        <div class="metrica-label">{{ t('hud.punteggio') }}</div>
       </div>
     </div>
 
     <!-- Azioni Rapide / Utilità -->
     <div class="hud-destra">
+      <!-- Switcher Lingua IT/EN -->
+      <div class="selettore-lingua" role="group" aria-label="Selezione lingua">
+        <button
+          type="button"
+          class="btn-lingua"
+          :class="{ attivo: isItalian }"
+          title="Passa a Italiano"
+          @click="setLingua('it')"
+        >
+          IT
+        </button>
+        <button
+          type="button"
+          class="btn-lingua"
+          :class="{ attivo: isEnglish }"
+          title="Switch to English"
+          @click="setLingua('en')"
+        >
+          EN
+        </button>
+      </div>
+
       <!-- Guida rapida / Tutorial -->
       <button
         type="button"
         class="btn-icona"
-        title="Guida di gioco e regole"
+        :title="t('hud.guidaRegole')"
         @click="emit('open-tutorial')"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -107,7 +132,7 @@ const progressPercent = computed(() => {
         type="button"
         class="btn-icona"
         :class="{ disattivato: isMuted }"
-        :title="isMuted ? 'Attiva effetti sonori' : 'Disattiva effetti sonori'"
+        :title="isMuted ? t('hud.audioAttiva') : t('hud.audioDisattiva')"
         @click="emit('toggle-sound')"
       >
         <!-- Icona Audio On -->
@@ -270,6 +295,42 @@ const progressPercent = computed(() => {
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
+}
+
+/* Switcher Lingua HUD */
+.selettore-lingua {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.18rem 0.28rem;
+  border-radius: 8px;
+  border: 1px solid var(--bordo-sottile);
+  background: var(--bg-superficie);
+  user-select: none;
+}
+
+.btn-lingua {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 650;
+  color: var(--testo-terziario);
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  line-height: 1;
+}
+
+.btn-lingua:hover {
+  color: var(--testo-primario);
+}
+
+.btn-lingua.attivo {
+  background: var(--accento);
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .btn-icona {

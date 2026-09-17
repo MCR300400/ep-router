@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { useLingua } from '../composables/useLingua'
 
 const props = defineProps({
   level: { type: Object, required: true },
@@ -8,6 +9,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['next-level', 'replay', 'open-levels'])
+
+const { t, lingua } = useLingua()
 
 // Calcolo stelle (1-3)
 const stars = computed(() => {
@@ -25,41 +28,41 @@ const stars = computed(() => {
         <div class="stelle">
           <span v-for="s in 3" :key="s" class="stella" :class="{ attiva: s <= stars }">★</span>
         </div>
-        <h2 class="titolo-vittoria">Livello Completato!</h2>
+        <h2 class="titolo-vittoria">{{ t('complete.titolo') }}</h2>
         <p class="sottotitolo-vittoria">{{ level.title }}</p>
       </div>
 
       <div class="griglia-statistiche">
         <div class="scheda-stat">
-          <span class="label">SLA Mantenuto</span>
+          <span class="label">{{ t('complete.sla') }}</span>
           <span class="valore font-mono" :style="{ color: stats.sla >= 90 ? 'var(--verde-http)' : 'var(--ambra-media)' }">
             {{ stats.sla }}%
           </span>
         </div>
 
         <div class="scheda-stat">
-          <span class="label">Latenza Media</span>
+          <span class="label">{{ t('complete.latenza') }}</span>
           <span class="valore font-mono">{{ stats.averageLatency }} ms</span>
         </div>
 
         <div class="scheda-stat">
-          <span class="label">Pacchetti Consegnati</span>
+          <span class="label">{{ t('complete.pacchetti') }}</span>
           <span class="valore font-mono">{{ stats.deliveredCount }}</span>
         </div>
 
         <div v-if="stats.cacheHits > 0" class="scheda-stat">
-          <span class="label">Cache Hits (0ms)</span>
+          <span class="label">{{ t('complete.cache') }}</span>
           <span class="valore font-mono ciano">{{ stats.cacheHits }}</span>
         </div>
 
         <div v-if="stats.ddosBlocked > 0" class="scheda-stat">
-          <span class="label">DDoS Neutralizzati</span>
+          <span class="label">{{ t('complete.ddos') }}</span>
           <span class="valore font-mono blu">{{ stats.ddosBlocked }}</span>
         </div>
 
         <div class="scheda-stat">
-          <span class="label">Punteggio Totale</span>
-          <span class="valore font-mono accento">{{ stats.score.toLocaleString('it-IT') }} pts</span>
+          <span class="label">{{ t('complete.punteggio') }}</span>
+          <span class="valore font-mono accento">{{ stats.score.toLocaleString(lingua === 'en' ? 'en-US' : 'it-IT') }} pts</span>
         </div>
       </div>
 
@@ -69,7 +72,7 @@ const stars = computed(() => {
             <polyline points="1 4 1 10 7 10"></polyline>
             <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
           </svg>
-          <span>Rigioca</span>
+          <span>{{ t('complete.rigioca') }}</span>
         </button>
 
         <button
@@ -78,7 +81,7 @@ const stars = computed(() => {
           class="btn-primario"
           @click="emit('next-level')"
         >
-          <span>Prossimo Livello</span>
+          <span>{{ t('complete.prossimo') }}</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
             <polyline points="12 5 19 12 12 19"></polyline>
@@ -91,7 +94,7 @@ const stars = computed(() => {
           class="btn-primario"
           @click="emit('open-levels')"
         >
-          <span>Tutti i Livelli</span>
+          <span>{{ t('complete.livelli') }}</span>
         </button>
       </div>
     </div>

@@ -1,11 +1,14 @@
 <script setup>
 import { LEVELS } from '../game/levels.js'
+import { useLingua } from '../composables/useLingua'
 
 defineProps({
   currentLevelId: { type: Number, required: true }
 })
 
 const emit = defineEmits(['select-level', 'close'])
+
+const { t } = useLingua()
 </script>
 
 <template>
@@ -13,8 +16,8 @@ const emit = defineEmits(['select-level', 'close'])
     <div class="modal-card selezione-livelli">
       <div class="testata-modal">
         <div>
-          <h2 class="titolo-modal">Seleziona Topologia</h2>
-          <p class="sottotitolo-modal">Scegli una missione o affronta la modalità infinita</p>
+          <h2 class="titolo-modal">{{ t('select.titolo') }}</h2>
+          <p class="sottotitolo-modal">{{ t('select.sottotitolo') }}</p>
         </div>
         <button type="button" class="btn-chiudi" @click="emit('close')">✕</button>
       </div>
@@ -30,9 +33,9 @@ const emit = defineEmits(['select-level', 'close'])
           <div class="info-livello">
             <div class="testata-scheda">
               <span class="badge-tag-livello" :class="{ endless: lvl.isEndless }">
-                {{ lvl.isEndless ? 'SURVIVAL' : `LIVELLO ${lvl.id}` }}
+                {{ lvl.isEndless ? 'SURVIVAL' : `${t('select.livello')} ${lvl.id}` }}
               </span>
-              <span v-if="lvl.id === currentLevelId" class="badge-in-corso">In corso</span>
+              <span v-if="lvl.id === currentLevelId" class="badge-in-corso">{{ t('select.inCorso') }}</span>
             </div>
             <h3 class="nome-livello">{{ lvl.title }}</h3>
             <p class="desc-livello">{{ lvl.subtitle }}</p>
@@ -40,10 +43,10 @@ const emit = defineEmits(['select-level', 'close'])
 
           <div class="footer-scheda">
             <span class="dettaglio">
-              Obiettivo: <strong>{{ lvl.isEndless ? 'Record' : `${lvl.targetDeliveries} req` }}</strong>
+              {{ t('select.obiettivo') }} <strong>{{ lvl.isEndless ? 'Record' : `${lvl.targetDeliveries} req` }}</strong>
             </span>
             <span class="dettaglio">
-              Max fibra: <strong>{{ lvl.maxCables }}</strong>
+              {{ t('select.maxFibra') }} <strong>{{ lvl.maxCables }}</strong>
             </span>
           </div>
         </div>

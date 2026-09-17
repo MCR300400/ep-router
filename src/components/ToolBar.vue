@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { useLingua } from '../composables/useLingua'
 
 const props = defineProps({
   stats: { type: Object, required: true },
@@ -8,6 +9,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['toggle-pause', 'set-speed', 'restart-level', 'clear-cables'])
+
+const { t } = useLingua()
 
 const isPaused = computed(() => props.gameState === 'paused')
 </script>
@@ -18,10 +21,10 @@ const isPaused = computed(() => props.gameState === 'paused')
     <div class="banner-suggerimento" :class="{ attivo: !!stats.selectedNode }">
       <div v-if="stats.selectedNode" class="testo-suggerimento">
         <span class="pulse-icon">⚡</span>
-        <span>Nodo selezionato: <strong>{{ stats.selectedNode }}</strong>. Tocca un altro nodo per collegare la fibra.</span>
+        <span>{{ t('toolbar.nodoSelezionato') }} <strong>{{ stats.selectedNode }}</strong>. {{ t('toolbar.toccaAltroNodo') }}</span>
       </div>
       <div v-else class="testo-suggerimento standard">
-        <span>Trascina tra due nodi o toccali in sequenza per collegarli. Clicca ✕ sul cavo per rimuoverlo.</span>
+        <span>{{ t('toolbar.istruzioneStandard') }}</span>
       </div>
     </div>
 
@@ -34,7 +37,7 @@ const isPaused = computed(() => props.gameState === 'paused')
           <circle cx="18" cy="12" r="3"></circle>
           <line x1="9" y1="12" x2="15" y2="12"></line>
         </svg>
-        <span>Fibra: <strong>{{ stats.cablesCount }}</strong> / {{ stats.maxCables }}</span>
+        <span>{{ t('toolbar.fibra') }}: <strong>{{ stats.cablesCount }}</strong> / {{ stats.maxCables }}</span>
       </div>
 
       <div class="separatore"></div>
@@ -44,7 +47,7 @@ const isPaused = computed(() => props.gameState === 'paused')
         type="button"
         class="btn-azione primario"
         :class="{ attivo: isPaused }"
-        :title="isPaused ? 'Riprendi simulazione (Spazio)' : 'Metti in pausa (Spazio)'"
+        :title="isPaused ? t('toolbar.riprendiSpazio') : t('toolbar.pausaSpazio')"
         @click="emit('toggle-pause')"
       >
         <svg v-if="isPaused" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -54,7 +57,7 @@ const isPaused = computed(() => props.gameState === 'paused')
           <rect x="6" y="4" width="4" height="16"></rect>
           <rect x="14" y="4" width="4" height="16"></rect>
         </svg>
-        <span class="testo-btn">{{ isPaused ? 'Riprendi' : 'Pausa' }}</span>
+        <span class="testo-btn">{{ isPaused ? t('toolbar.riprendi') : t('toolbar.pausa') }}</span>
       </button>
 
       <!-- Controllo Velocità 1x / 2x -->
@@ -62,7 +65,7 @@ const isPaused = computed(() => props.gameState === 'paused')
         type="button"
         class="btn-azione"
         :class="{ attivo: gameSpeed === 2 }"
-        title="Cambia velocità di simulazione"
+        :title="t('toolbar.velocita')"
         @click="emit('set-speed', gameSpeed === 1 ? 2 : 1)"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -76,7 +79,7 @@ const isPaused = computed(() => props.gameState === 'paused')
       <button
         type="button"
         class="btn-azione"
-        title="Riavvia livello corrente"
+        :title="t('toolbar.riavvia')"
         @click="emit('restart-level')"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -90,7 +93,7 @@ const isPaused = computed(() => props.gameState === 'paused')
         type="button"
         class="btn-azione distruttivo"
         :disabled="stats.cablesCount === 0"
-        title="Rimuovi tutti i cavi"
+        :title="t('toolbar.rimuoviTutti')"
         @click="emit('clear-cables')"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
