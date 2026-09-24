@@ -201,7 +201,6 @@ const hint = computed(() => {
 
 .btn-primario:hover {
   background: #dc2626;
-  transform: translateY(-1px);
 }
 
 .btn-secondario {

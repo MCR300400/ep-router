@@ -145,7 +145,6 @@ const { t } = useLingua()
 .scheda-livello:hover {
   background: var(--bg-superficie-hover);
   border-color: var(--accento-bordo);
-  transform: translateY(-1px);
 }
 
 .scheda-livello.attivo {

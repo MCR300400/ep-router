@@ -220,12 +220,10 @@ const stars = computed(() => {
 .btn-primario {
   background: var(--accento);
   color: #ffffff;
-  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
 }
 
 .btn-primario:hover {
   background: var(--accento-hover);
-  transform: translateY(-1px);
 }
 
 .btn-secondario {

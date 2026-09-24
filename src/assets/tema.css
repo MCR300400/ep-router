@@ -7,32 +7,32 @@
   color-scheme: dark;
 
   /* Surfaces: Cyber Command Slate & Topology Void */
-  --bg-primario: #060911;
-  --bg-superficie: #0b1220;
-  --bg-superficie-elevata: #121c32;
-  --bg-superficie-hover: #192744;
-  --header-bg: rgba(6, 9, 17, 0.90);
+  --bg-primario: #121316;
+  --bg-superficie: #191a20;
+  --bg-superficie-elevata: #22242c;
+  --bg-superficie-hover: #292b35;
+  --header-bg: rgba(18, 19, 22, 0.90);
 
   /* Typography */
-  --testo-primario: #f1f5f9;
-  --testo-secondario: #94a3b8;
-  --testo-terziario: #64748b;
-  --testo-invertito: #060911;
+  --testo-primario: #f4f4f5;
+  --testo-secondario: #a1a1aa;
+  --testo-terziario: #71717a;
+  --testo-invertito: #121316;
 
   /* Structural lines */
   --bordo-sottile: rgba(255, 255, 255, 0.08);
   --bordo-medio: rgba(255, 255, 255, 0.14);
   --bordo-forte: rgba(255, 255, 255, 0.22);
 
-  /* Accent: Phosphor Network Green */
-  --accento: #10b981;
-  --accento-hover: #34d399;
-  --accento-attivo: #059669;
-  --accento-sfondo: rgba(16, 185, 129, 0.12);
-  --accento-sfondo-hover: rgba(16, 185, 129, 0.20);
-  --accento-bordo: rgba(16, 185, 129, 0.35);
-  --accento-testo: #6ee7b7;
-  --accento-contrasto: #060911;
+  /* Accent: Artisanal Orange */
+  --accento: #f97316;
+  --accento-hover: #fb923c;
+  --accento-attivo: #ea580c;
+  --accento-sfondo: rgba(249, 115, 22, 0.12);
+  --accento-sfondo-hover: rgba(249, 115, 22, 0.20);
+  --accento-bordo: rgba(249, 115, 22, 0.35);
+  --accento-testo: #fdba74;
+  --accento-contrasto: #ffffff;
 
   /* Networking Tones */
   --verde-http: #10b981;
