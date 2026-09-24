@@ -204,12 +204,13 @@ onBeforeUnmount(() => {
 .router-app-container {
   width: 100vw;
   height: 100vh;
-  height: 100dvh; /* supporto dinamico altezza viewport mobile */
+  height: 100svh;
   display: flex;
   flex-direction: column;
   background-color: var(--bg-primario);
   position: relative;
   overflow: hidden;
+  touch-action: manipulation;
 }
 
 .main-canvas-area {
